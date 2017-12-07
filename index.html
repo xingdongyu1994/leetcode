@@ -1,0 +1,1520 @@
+<!DOCTYPE html>
+    <head>
+        <title>leetcode</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    </head>
+    <body>
+        <script>
+          //921行截至
+            function TreeNode(val) {
+               this.val = val
+               this.left = null
+               this.right = null
+            }
+            function CreateTreeNode(node,i,len,arr) {
+              var leftIndex = 2*i+1
+              var rightIndex = 2*i+2
+              if(leftIndex<len) {
+                var leftChildnode = new TreeNode()
+                leftChildnode.val = arr[leftIndex]
+                node.left = leftChildnode
+                CreateTreeNode(leftChildnode, leftIndex, len, arr)
+              }
+              if(leftIndex<len) {
+                var rightChildnode = new TreeNode()
+                rightChildnode.val = arr[rightIndex]
+                node.right = rightChildnode
+                CreateTreeNode(rightChildnode, rightIndex, len, arr)
+              }
+            }
+
+            //1.给定一个值和整数数组，要求返回数组中两个元素相加等于该元素的索引
+            //2.反转整数   123   321
+            function reverse(x) {
+              var abs = x>0? x:-x
+              var result = 0
+              while (abs>0) {
+                result = result*10 + abs%10
+                abs = Math.floor(abs / 10)
+              }
+              if(x ===0) {
+                return 0
+              }
+              return x >0 ?result : -result
+            }
+            // console.log("2答案",reverse(1234))
+            //3.回文数判断
+            function daozhi(x) {
+              var result = 0
+              var num = x
+              while (num>0) {
+                result = result*10 + num%10
+                num = Math.floor(num/10)
+              }
+              if(x === 0) {
+                return 0
+              }
+              return result
+            }
+            // console.log("3答案",daozhi(123321) === 12332? "是回文数":"不是回文数")
+            //4.合并两个排完序的列表
+             function ListNode(val) {
+               this.val = val;
+               this.next = null
+             }
+             ListNode.prototype.setNext = function(node) {
+               this.next = node
+               return node
+             }
+             var h1 = new ListNode(1)
+             h1.setNext(new ListNode(2)).setNext(new ListNode(5))
+             var h2 = new ListNode(2)
+             h2.setNext(new ListNode(4)).setNext(new ListNode(6))
+             function mergetowlist(h1, h2){
+               if(h1 ==null && h1 ==null) {
+                 return null
+               }
+               if(h1 ==null) {
+                 return h2
+               }
+               if(h2 ==null) {
+                 return h1
+               }
+               var head = null
+               if(h1.val>h2.val) {
+                 head = h2
+                 head.next = mergetowlist(h1, h2.next)
+               } else {
+                 head = h1
+                 head.next = mergetowlist(h1.next, h2)
+               }
+               return head
+             }
+            //  console.log("4答案",mergetowlist(h1,h2))
+            //5.排序数组去重(不开辟新空间)
+            function removearr(arr) {
+               if(arr == null || arr.length ==0) {
+                 return 0
+               }
+               var index=1
+               for(var i=1; i<arr.length; i++) {
+                 if(arr[i] != arr[i-1]) {
+                   arr[index] = arr[i]
+                   index++
+                 }
+               }
+               return index
+            }
+            // console.log("5答案",removearr([1,2,2,2,3,3,4,5,5,6]))
+            //6.移除元素 数组不排序(不开辟空间)
+            function removearr2(arr, val) {
+              if(arr == null || arr.length ==0) {
+                return 0
+              }
+              var index=0
+              for(var i=0; i<arr.length; i++) {
+                if(arr[i] != val) {
+                  arr[index] = arr[i]
+                  index++
+                }
+              }
+              return arr
+            }
+            var arr = [3,2,2,3]
+            // console.log("6答案",removearr2(arr,2))
+            //7.实现strStr()函数 匹配字符串
+            function compare(fustr, str, index) {
+              var num=0
+              for(var i=0; i<str.length; i++) {
+                if(str[i] == fustr[index+i]) {
+                  num ++
+                }
+              }
+              if(num == str.length) {
+                return true
+              } else {
+                return false
+              }
+            }
+            function strStr(haystack, needle) {
+              // for(var i=0; i<haystack.length; i++) {
+              //   if(haystack[i] == needle[0]) {
+              //     if(compare(haystack,needle, i)) {
+              //       return i
+              //     }
+              //   }
+              // }
+              // return -1
+              var len1 = haystack.length;
+               var len2 = needle.length;
+
+               for (var i = 0; i <= len1 - len2; i++) {
+                   if (haystack.substring(i, i + len2) == needle) return i;
+               }
+               return -1;
+            }
+            // console.log("7答案",strStr("", ""))
+            //8.搜索查找
+             function searchinsert(arr, target) {
+               if(arr.length ==0 || arr[0]>target) {
+                 return 0
+               }
+               if(arr[arr.length-1] < target) {
+                 return arr.length
+               }
+               var low = 0
+               var hight = arr.length - 1
+               var center = 0
+               while (low<=hight) {
+                 center = Math.floor((low+hight)/2)
+                 if(arr[center] < target){
+                   low = center+1
+                 } else if (arr[center] > target) {
+                   hight = center-1
+                 } else {
+                   return center
+                 }
+               }
+               return arr[center]>target? center: center+1
+             }
+            //  console.log("8答案",searchinsert([2,3,4,5],6))
+            //9.最后一个的长度
+            function lengthlastword(str) {
+              var index = str.length-1
+              var num =0
+              while (str.charAt(index) == ' ' && index>=0) {
+                index--
+              }
+              while (str.charAt(index) != ' ' && index>=0) {
+                index--
+                num++
+              }
+              return num
+            }
+            // console.log("9答案", lengthlastword("hello ddd "))
+            //10.排序链表去重
+            var h10 = new ListNode(1)
+            h10.setNext(new ListNode(1))
+            function deleteDuplicates(head) {
+              if(head===null) {
+                return null
+              }
+              var pre = head
+              var cur = head.next
+              while (cur) {
+                if(pre.val == cur.val) {
+                  pre.next = cur.next
+                } else {
+                  pre = pre.next
+                }
+                cur = cur.next
+              }
+              return head
+            }
+            // console.log("10答案",deleteDuplicates(h10))
+            //11.数组排序 合并 双指针
+            function arrsortmerge(nums1, m, nums2, n) {
+              var total = [];
+                 var i1 = 0, i2 = 0;
+                 while (i1 < m && i2 < n) {
+                     if (nums1[i1] < nums2[i2]) {
+                         total.push(nums1[i1]);
+                         i1++;
+                     }
+                     else {
+                         total.push(nums2[i2]);
+                         i2++;
+                     }
+                 }
+                 if (i1 < m) {
+                     while (i1 < m) {
+                         total.push(nums1[i1]);
+                         i1++;
+                     }
+                 }
+                 else if (i2 < n) {
+                     while (i2 < n) {
+                         total.push(nums2[i2]);
+                         i2++;
+                     }
+                 }
+                 for (var i = 0; i < m + n; i++) {
+                     nums1[i] = total[i];
+                 }
+            }
+            // console.log("11答案",arrsortmerge([2,0],1,[1],1))
+            // 12.标签两个指针  反向字符串
+            function pointreverString(str1) {
+              var str = str1.split('')
+              if(str == "" || str.length ==0) {
+                return s
+              }
+              var start =0
+              var last = str.length-1
+
+              while (start<last) {
+                var temp = str[start]
+                str[start] = str[last]
+                str[last] = temp
+                start++
+                last--
+              }
+              return str.join('')
+            }
+            // console.log("12 标签两个指针答案",pointreverString("hellow"))
+            //13两个数组交集 两个指针
+            function pointtwoarr(arr11,arr22) {
+              var arr1 = arr11.sort(function(a,b){
+                return a-b})
+                  var arr2 = arr22.sort(function(a,b){
+                return a-b})
+              var arr1left = 0
+              var arr2left = 0
+              var res = []
+              var tag
+              while (arr1left<arr1.length && arr2left<arr2.length) {
+                if(arr1[arr1left]<arr2[arr2left]) {
+                  arr1left++
+                } else if (arr1[arr1left]>arr2[arr2left]) {
+                  arr2left++
+                }
+                 else if (arr1[arr1left] == arr2[arr2left]) {
+                  if(arr1[arr1left] !=tag) {
+                    res.push(arr1[arr1left])
+                    tag = arr1[arr1left]
+                  }
+                  arr1left++
+                  arr2left++
+                }
+              }
+              return res
+            }
+            // console.log("13答案 标签两个指针", pointtwoarr([1,2,2,1],[2,2]))
+            //14.有效回文 标签两个指针
+            function isPalindrome (str1) {
+              var bigstr = str1.toUpperCase()
+              var str = bigstr.split('')
+              if(str=="" || str.length ==0) {
+                return true
+              }
+
+              var left = 0
+              var right = str.length-1
+
+              while (left<right) {
+                var char1 = isAlphaNumeric(str[left])
+                var char2 = isAlphaNumeric(str[right])
+
+                if(char1 && char2) {
+                  if(str[left] == str[right]) {
+                    left++
+                    right--
+                  } else {
+                    return false
+                  }
+                } else {
+                  if(!char1) {
+                    left++
+                  }
+                  if(!char2) {
+                    right--
+                  }
+                }
+              }
+              return true
+              function isAlphaNumeric(char) {
+                  if ((char >= "0" && char <= "9") ||
+                      (char >= "A" && char <= "Z")) return true
+                  else return false
+              }
+
+            }
+
+            // console.log("14答案 标签两个指针", isPalindrome("A , a pc s : :Paa")?"是回文":"不是回文")
+            //15. 两个数组交集 pointtwoarr两个指针
+            function pointtwoarr2(arr11,arr22) {
+              var arr1 = arr11.sort(function(a,b){
+                return a-b})
+                  var arr2 = arr22.sort(function(a,b){
+                return a-b})
+              var arr1left = 0
+              var arr2left = 0
+              var res=[]
+              while (arr1left<arr1.length && arr2left<arr2.length) {
+                if(arr1[arr1left]<arr2[arr2left]) {
+                  arr1left++
+                } else if (arr1[arr1left]>arr2[arr2left]) {
+                  arr2left++
+                }
+                 else if (arr1[arr1left] == arr2[arr2left]) {
+                  // if(arr1[arr1left] !=tag) {
+                    res.push(arr1[arr1left])
+                    // tag = arr1[arr1left]
+                  // }
+                  arr1left++
+                  arr2left++
+                }
+              }
+              return res
+            }
+
+            // console.log("15答案 两个数组交集2",pointtwoarr2([1,3,2,3,4,6,5,7],[2,3,3,4,5,4]))
+            //16. 反转元音  两个指针
+            function reverVowels(str1){
+              var str = str1.split('')
+              if(str == "" || str.length ==0) {
+                return str1
+              }
+              console.log("结果",str)
+              var left = 0
+              var right = str.length-1
+              while (left < right) {
+                var char1 = isVoew(str[left])
+                var char2 = isVoew(str[right])
+
+                if(char1 && char2) {
+                  var temp = str[left]
+                  str[left] = str[right]
+                  str[right] = temp
+                  left++
+                  right--
+                } else {
+                  if(!char1) {
+                    left++
+                  }
+                  if(!char2) {
+                    right--
+                  }
+                }
+              }
+              return str.join('')
+              function isVoew(a) {
+                if(a=='a'||a=='e'||a=='i'||a=='o'||a=='u'||a=='A'||a=='E'||a=='I'||a=='O'||a=='U')
+                    return true
+                else return false
+              }
+            }
+            // console.log("16答案 反转元音",reverVowels("hello"))
+            //17 移动0节点  两个指针
+            function removezeroes(arr) {
+              var index =0
+              for(var i=0; i<arr.length; i++) {
+                if(arr[i]!=0) {
+                  arr[index] = arr[i]
+                  index++
+                }
+              }
+              for(var j=index;j<arr.length; j++) {
+                arr[j]=0
+              }
+            }
+            // console.log("17答案 移动0节点",removezeroes([0,1,2,0,3,6]))
+            //18. 回文单链表 两个指针
+            function ispalindromeDuplicates(node) {
+              function getLength() {
+                var len =0
+                var head = node
+                while (head !=null) {
+                  len++
+                  head = head.next
+                }
+                return len
+              }
+              function reversenode(renode) {
+                var pre = null
+                var cur = renode
+                while (cur!=null) {
+                  var nex = cur.next
+                  cur.next = pre
+                  pre = cur
+                  cur = nex
+                }
+                return pre
+              }
+              if(node ==null || node.next ==null) {
+                return true
+              }
+
+              var n = getLength()
+              var half = Math.floor(n/2)
+
+              var leftend = node
+              for(var i =0; i<half-1; i++) {
+                leftend = leftend.next
+              }
+
+
+              var rightstart = leftend.next
+
+              // console.log("坐做",leftstart)
+              if(n%2 !=0) {
+                rightstart = rightstart.next
+              }
+
+              rightstart = reversenode(rightstart)
+              var leftstart = node
+              for(var i=1; i<=half; i++) {
+                if(leftstart.val !=rightstart.val) {
+                  return false
+                } else {
+                  leftstart = leftstart.next
+                  rightstart = rightstart.next
+                }
+              }
+              return true
+            }
+            var h18 = new ListNode(1)
+            h18.setNext(new ListNode(2)).setNext(new ListNode(3)).setNext(new ListNode(4)).setNext(new ListNode(3)).setNext(new ListNode(2)).setNext(new ListNode(1))
+            // console.log("18答案 回文单链表", ispalindromeDuplicates(h18))
+            //19.数组中下标和返回下标  两个指针
+            function twosum(arr, target) {
+              if(arr.length == 0) {
+                return null
+              }
+              var left =0
+              var right = arr.length-1
+              var res = []
+              while (left<=right) {
+                var sum = arr[left] + arr[right]
+                if(sum>target) {
+                  right--
+                } else if (sum == target) {
+                  return [left+1,right+1]
+                } else {
+                  left++
+                }
+              }
+              return null
+            }
+            // console.log("19 答案 两个指针和", twosum([1,3,4,5,6,12],9))
+            //20. 判断是否有重复 标签哈希表
+            function isarrrepeat(arr) {
+              if(arr.length ==0 || arr.length ==1) {
+                return false
+              }
+              var obj ={}
+              for(var i=0; i<arr.length; i++) {
+                if(obj[arr[i]] ==1) {
+                  return  true
+                } else {
+                  obj[arr[i]]=1;
+                }
+              }
+              return false
+            }
+            // console.log("20答案 哈希表", isarrrepeat([1,2,3,3,4,5]))
+            //21 判断是否重复 在给定长度 标签哈希表和指针
+            function isinlengthrepeat(arr, k) {
+              if (arr == null || arr.length <= 1 || k <= 0) return false
+              var obj = {}
+              var start = 0
+              var end = 0
+              for(var i=0; i<arr.length; i++) {
+                if(obj[arr[i]] == 1) {
+                  if(end - start >k) {
+                    start++
+                  } else {
+                    return true
+                  }
+                } else{
+                  end++
+                  obj[arr[i]] = 1
+                }
+              }
+              return false
+            }
+            // console.log("21答案 哈希表 是否给定长度重复", isinlengthrepeat([1,2,3,1,4,5],4))
+            //22 code409 字符串最长回文长度  标签哈希表
+            function strlongestPalindrome(str1) {
+              var str = str1.split('').sort()
+              var obj ={}
+              var num =0
+              for(var i=0; i<str.length; i++) {
+                if(obj[str[i]] == 1) {
+                  delete obj[str[i]]
+                  num++
+                } else {
+                  obj[str[i]]=1
+                }
+              }
+              if(JSON.stringify(obj) == '{}') {
+                return num*2
+              } else {
+                return num*2+1
+              }
+            }
+            // console.log("22答案 code409 哈希表 最长回文长度",strlongestPalindrome("abccccdd"))
+            // 23 code680  判断回文 中间可以删除一个在判断
+            function isPalindromedeleteone(s) {
+              var str = s.split('')
+              var len  = str.length-1
+              if(str=="" || str.length ==0) {
+                 return true
+              } 
+              if(str.length>=50000) {
+                 return null
+              }
+              return ispal(str,0,len,0)
+              function  ispal(arr,left,right,tag) {
+                while(left<=right) {
+                  if(arr[left] == arr[right]) {
+                    left++
+                    right--
+                  } else {
+                      if(tag ==1) {
+                          return false 
+                      } else {
+                          return ispal(str, left+1,right, 1) || ispal(str, left,right-1, 1)
+                      }
+                  }
+                }
+                return true
+              }
+            
+            }
+            // console.log("23答案 code680 指针", isPalindromedeleteone('aba'))
+            //24.单号查找 code136
+            function inarrisonenum(nums) {
+              var i
+              for(i=0; i<nums.length ;) {
+                console.log("这ode",nums[i])
+                if(i+1 <nums.length && nums[i] == nums[i+1]) {
+                  i+=2
+                } else {
+                  break
+                }
+                
+              }
+              return nums[i]
+            }
+            // console.log("24答案 code136 哈希", inarrisonenum([1]))
+            //25.字符串的段数 code434 标签 字符串
+            function stritemnum(str) {
+              var res = 0
+              var tag =0
+              for(var i=0; i<str.length; i++){
+                if(str[i] == ' ') {
+                  res = res+tag
+                  tag=0
+                } else {
+                  tag=1
+                }
+              }
+              res = res+tag
+              return res
+            }
+            // console.log("25答案 code434 字符串",stritemnum("hello my name is xiaoming"))
+            // 26.字符串压缩 code443 标签 字符串
+            function strcompress(iniString) {
+              var length=iniString.length;
+              var i=0;
+              var result="";
+              while(i<length){
+                  var a=iniString.charAt(i++);
+                  console.log("VVVVVVVVVVVV",a)
+                  var count=1;
+                  while(i<length&&iniString.charAt(i)==a){
+                      i++;
+                      count++;
+                  }
+                  result=result+a+count;
+              }
+              console.log("FFFFFFFFFFFFf",result)
+              if(result.length<length) return result;
+               return iniString;
+            }
+            // console.log("26答案 code443 字符串",strcompress('aabbccddeeeeeeeeeeeeeeeef'))
+            //27. 字符串匹配  code459 标签 指针
+            function isstrrepeatstr(arr) {
+              if(arr.length<2) {
+                return false
+              }
+              var low =0
+              var last =1
+              var istag = false
+              while(last<arr.length) {
+                if(arr[last] == arr[0]) {
+                  //开始判断是否有重复
+                  for(low=0; last<arr.length; ) {
+                   if(arr[low] == arr[last]) {
+                    console.log("g'g'g'gFFFFFFFFFFFFFFFFFF",last)
+                    if(last == arr.length-1 && arr.length%2!=0 && istag) {
+                      
+                       return false
+                     } else {
+                       
+                      istag=true
+                      low++
+                      last++ 
+                     }  
+                                                  
+                   } else {
+                     istag = false
+                     break;
+                   }
+                  }
+                } else {
+                  istag = false
+                  last++
+                }
+              }
+                console.log("zhlei ",low)
+                console.log("FFFFFFFFFFFFFFFFFF",last)
+                
+                console.log("FFFF",istag)
+              
+              return istag && low*2 >= arr.length;
+            }
+            // console.log("27答案 code459 指针", isstrrepeatstr("abaababaab"))
+            //28. 删除链表链接元素  code203 标签链表
+            var h28 = new ListNode(1)
+            h28.setNext(new ListNode(2)).setNext(new ListNode(3)).setNext(new ListNode(4)).setNext(new ListNode(5))
+            function removeelement(head, target){
+              if(head == null) {
+                return null
+              }
+              var fristnodehead = new ListNode(-1)
+              fristnodehead.next = head
+              var cur = head
+              var pre = fristnodehead
+              while(cur!=null){
+                 if(cur.val == target) {
+                    pre.next = cur.next
+                 } else {
+                    pre = pre.next
+                 }
+                 cur = cur.next
+              }
+              return fristnodehead.next
+            }
+            // console.log("28答案 code203 链表",removeelement(h28,4))
+            //29.反向链表 code206 标签链表 三个指针
+            var h29 = new ListNode(1)
+            h29.setNext(new ListNode(2)).setNext(new ListNode(3)).setNext(new ListNode(4)).setNext(new ListNode(5))
+            function reverelement(head) {
+              if(head == null || head.next ==null) {
+                return head
+              }
+              var pre = null
+              var cur = head
+              while (cur!=null) {
+                var nex = cur.next
+                cur.next = pre
+                pre = cur
+                cur = nex
+              }
+              return pre
+            }
+            // console.log("29答案 code206 链表", reverelement(h29))
+            //30.对称二叉树 code101 标签树
+            var Nodearr30  = ['A','B','B','C','D','D','C']
+            var Nodelen30 = Nodearr30.length
+            var Nodenode30 = new TreeNode()
+            Nodenode30.val = Nodearr30[0]
+            CreateTreeNode(Nodenode30, 0, Nodelen30, Nodearr30)
+            function issymmetric (head) {
+              if(head == null) {
+                return true
+              } else {
+                return issymmetricNode(head.left, head.right)
+              }
+              function issymmetricNode(node1, node2) {
+                if(node1 ==  null && node2 == null) {
+                  return true
+                } 
+                if(node1 ==  null || node2 == null) {
+                  return false
+                }
+                if(node1.val !== node2.val) {
+                  return false;
+                }
+                return issymmetricNode(node1.left, node2.right) && issymmetricNode(node1.right, node2.left)
+              }
+            }
+            // console.log("30答案 code101 树",issymmetric(Nodenode30))
+            //31. 同一颗树 code100 标签树
+            var Nodearr31  = ['A','B','B','C','D','D','C']
+            var Nodelen31 = Nodearr31.length
+            var Nodenode31 = new TreeNode()
+            Nodenode31.val = Nodearr31[0]
+            CreateTreeNode(Nodenode31, 0, Nodelen31, Nodearr31)
+            var Nodearr311  = ['A','B','B','C','D','D','C']
+            var Nodelen311 = Nodearr311.length
+            var Nodenode311 = new TreeNode()
+            Nodenode311.val = Nodearr311[0]
+            CreateTreeNode(Nodenode311, 0, Nodelen311, Nodearr311)
+            function issametree(node1, node2) {
+              if(node1 == null && node2 == null) {
+                return true
+              }
+              if(node1 == null || node2 == null) {
+                return false
+              }
+              if(node1.val !== node2.val) {
+                return false
+              }
+              return issametree(node1.left,node2.left) && issametree(node1.right, node2.right)
+            }
+            // console.log("31答案 code100 树",issametree(Nodenode31, Nodenode311) )
+            //32. 二叉树最大深度 code104 标签树
+            var Nodearr32  = ['A','B','B','C','D','D','C']
+            var Nodelen32 = Nodearr31.length
+            var Nodenode32 = new TreeNode()
+            Nodenode32.val = Nodearr32[0]
+            CreateTreeNode(Nodenode32, 0, Nodelen32, Nodearr32)
+            function maxDepth(root) {
+              var max =0
+              if(root === null) {
+                return 0
+              }
+               getDepth(root,0)
+               return max
+               function getDepth(root,now) {
+                if(root === null) {
+                  if(now > max) {
+                    max = now
+                  }
+                  return
+                }
+                now++
+                getDepth(root.left, now)
+                getDepth(root.right, now)
+              }
+            }
+            // console.log("32答案 code104 树",maxDepth(Nodenode32))
+            //33.二叉树的最小深度 code111 标签树
+            function minDepth(root) {
+              if(root==null) return 0;  
+              var leftdepth=minDepth(root.left);  
+              var rightdepth=minDepth(root.right);  
+                
+              if(leftdepth==0)   
+                  return 1+rightdepth;  
+              else if(rightdepth==0)   
+                  return 1+leftdepth;  
+              else  
+              {  
+                  if(leftdepth<rightdepth) return 1+leftdepth;  
+                  else return 1+rightdepth;
+              }  
+            }
+            var Nodearr33  = ['A','B','B','D','C']
+            var Nodelen33 = Nodearr33.length
+            var Nodenode33 = new TreeNode()
+            Nodenode33.val = Nodearr33[0]
+            CreateTreeNode(Nodenode33, 0, Nodelen33, Nodearr33)
+            // console.log("33答案 code111 树",minDepth(Nodenode33))
+            //34. 一个二叉树是否是另一个树的结构
+            var Nodearr34  = [3,4,5,1,2,7,8,0]
+            var Nodelen34 = Nodearr34.length
+            var Nodenode34 = new TreeNode()
+            Nodenode34.val = Nodearr34[0]
+            CreateTreeNode(Nodenode34, 0, Nodelen34, Nodearr34)
+            var Nodearr344  = [4,1,2]
+            var Nodelen344 = Nodearr344.length
+            var Nodenode344 = new TreeNode()
+            Nodenode344.val = Nodearr344[0]
+            CreateTreeNode(Nodenode344, 0, Nodelen344, Nodearr344)
+            function issubtree(s, t) {
+              if(s == null || t == null) {
+                return false
+              }
+              if(s.val == t.val && isSame(s,t)) {
+                return true
+              } 
+              else {
+                return issubtree(s.left,t) || issubtree(s.right, t)
+              }
+              return false
+              
+              function isSame(ss, tt) {
+                if(ss == null && tt == null) {
+                  return true
+                }
+                if((ss != null && tt == null) || (ss == null && tt !=null)) {
+                  return false
+                }
+                // if(ss.val != tt.val) {
+                //   return false
+                // }
+                // return isSame(ss.left, tt.left) && isSame(ss.right, tt.right)
+                if((ss.val == tt.val) && isSame(ss.left, tt.left) && isSame(ss.right, tt.right)) {
+                  return true
+                }
+                return false
+              }
+            }
+            // console.log("34答案 code572 树",issubtree(Nodenode34,Nodenode344))
+            //35.合并两个向加二叉树 code617 标签树
+            var Nodenode35 = new TreeNode()
+            Nodenode35.val = 3
+            CreateTreeNode(Nodenode35, 0, 3, [3,4,2])
+            var Nodenode355 = new TreeNode()
+            Nodenode355.val = 3
+            CreateTreeNode(Nodenode355, 0, 5, [3,4,5,1,2])
+            function mergetowreducetree(root1, root2) {
+              if(root1 == null && root2 == null) {
+                return null
+              } else if(root1 == null){
+                return root2
+              } else if(root2 == null){
+                return root1
+              } else {
+                root1.val = root1.val+root2.val
+                root1.left = mergetowreducetree(root1.left,root2.left)
+                root1.right = mergetowreducetree(root1.right,root2.right)
+                return root1
+              }
+            }
+            // console.log("35答案 code617 树",mergetowreducetree(Nodenode35,Nodenode355))
+            //36.从二叉树来构造字符串 code606 标签树
+            var Nodearr36  = [3,4,5,'',2]
+            var Nodelen36 = Nodearr36.length
+            var Nodenode36 = new TreeNode()
+            Nodenode36.val = Nodearr36[0]
+            CreateTreeNode(Nodenode36, 0, Nodelen36, Nodearr36)
+            function creetreestr(root) {
+              var str= ''
+              if(root == null) {
+                return ''
+              }
+              str = str+root.val
+              if(root.left !=null) {
+                str = str+'('+creetreestr(root.left)+')'
+              }
+              
+              if((root.left == null) && (root.right!=null)) {
+                str = str+'()'
+              }
+              if(root.right !=null) {
+                str = str+'('+creetreestr(root.right)+')'
+              }     
+              return str
+            }
+            // console.log("36答案 code617 树",creetreestr(Nodenode36))
+            //37. 翻转树 code226 标签树
+            var Nodearr37  = [1,2,3,4,5,6,7]
+            var Nodelen37 = Nodearr37.length
+            var Nodenode37 = new TreeNode()
+            Nodenode37.val = Nodearr37[0]
+            CreateTreeNode(Nodenode37, 0, Nodelen37, Nodearr37)
+            function inverttree(root) {
+              var temp
+              var x
+              var arr = []
+              arr.push(root)
+              while(arr.length !=0){
+                x = arr[arr.length-1]
+                arr.pop()
+                temp = x.right
+                x.right = x.left
+                x.left = temp
+                if(x.left) {
+                 arr.push(x.left)
+                }
+                if(x.right) {
+                 arr.push(x.right)
+                }
+              }
+              console.log("最后的",root)
+            }
+            // console.log("37答案 code226 树",inverttree(Nodenode37))
+          //xingdongyu  困难程度   上面简单  下面中等
+
+          //38.删除链表结尾第N个节点 code19 两个指针
+          var h38 = new ListNode(1)
+          h38.setNext(new ListNode(2)).setNext(new ListNode(3)).setNext(new ListNode(4)).setNext(new ListNode(5))
+          function removelastnum(head,n) {
+            if(head == null) {
+              return null
+            }
+            var slow = head
+            var fast = head
+            while((n--)!=0) {
+              fast = fast.next
+            }
+            if(fast == null){
+              return head.next
+            }
+            while(fast.next !=null) {
+             fast=fast.next
+             slow=slow.next
+            }
+            slow.next = slow.next.next
+            return head
+          }
+          // console.log("38答案 code19 中 指针",removelastnum(h38,2))
+          //39.旋转链表  code61 指针
+          var h39 = new ListNode(1)
+          h39.setNext(new ListNode(2))
+          function RotateList(head, k) {
+            console.log("EEEEEEEEEEE",head)
+            if(head == null) {
+              return null
+            }
+            var len =1
+            var phead = head
+            var slow = head
+            var lenhead = head
+            var temp
+            while(lenhead.next!=null) {
+              lenhead = lenhead.next
+              len++
+            }
+            k = k%len
+            if(k ==0) {
+              return head
+            }
+            for(var i=0; i<k; i++) {
+              phead = phead.next
+            }
+            while(phead.next) {
+              slow = slow.next
+              phead = phead.next
+            }
+            conso
+            temp = slow.next
+            slow.next = null
+            phead.next = head
+            return temp
+          }
+          // console.log("39答案 code61 中 指针",RotateList(h39,1))
+          // 40.从排序的阵列中删除重复II code80  指针
+          var arr40 = [1,1,1,2,2,3]
+          function sortarrdelet(nums) {
+            if(nums == null) return 0;  
+            if(nums.length < 2) return nums.length;  
+              
+            var index = 2;  
+            for(var i = 2; i < nums.length; i++){  
+                if(nums[i] != nums[index - 2]){  
+                    nums[index] = nums[i];  
+                    index++;  
+                }  
+            }  
+            return index;  
+          }
+          // console.log("40答案 code80 指针",sortarrdelet(arr40))
+          //41.字符串中最长不重复 code3 哈希表  指针
+          var str41 = "abcabccc"
+          function findarrlast(str) {
+            var obj={}
+            var j=0
+            var res=0
+            for(var i=0; i<str.length; i++) {
+              // while(obj[str[i]] != 1 && j<str.length) {
+              //   obj[str[i]] =1
+              //   res = Math.max(res, j-i+1);
+              //   j++;
+              // }
+              // if(obj[str[i]] == 1) {
+              //   delete obj[str[i]]
+              //   num++
+              // } else {
+              //   obj[str[i]]=1
+              // }
+            }
+            console.log("VVVVVVVVVVVVV",res)
+          }
+          // console.log("41答案 code3 指针",findarrlast(str41))
+          //42.排序链表 code148 链表
+          var h42 = new ListNode(1)
+          h42.setNext(new ListNode(2)).setNext(new ListNode(3)).setNext(new ListNode(4))
+          function sortList(head) {
+            if(head == null || head.next == null) {
+              return head
+            }
+            var h1 = head
+            var h2 = head
+            while(h2.next!=null &&h2.next.next!=null) {
+              h1 = h1.next
+              h2 = h2.next.next
+            }
+            h2 = h1.next
+            h1.next = null
+            var left = sortList(head)
+            var right = sortList(h2)
+            return mergrList(left, right)
+            // h1.next=null //断开
+            function mergrList(node1, node2) {
+              var heads = new ListNode(-1)
+              var p = heads
+              while(node1!=null && node2!=null) {
+                var val1 = node1.val
+                var val2 = node2.val
+                if(val1<=val2) {
+                  p.next = node1
+                  node1 = node1.next
+                  // console.log("最后的是",p)
+                } else{
+                  p.next = node2
+                  node2 = node2.next
+                }
+                p = p.next
+              }
+              if(node1!=null) {
+                p.next = node1
+              }
+              if(node2!=null) {
+                p.next = node2
+              }
+              return heads.next
+            }
+          }
+          // console.log("42答案 code148 链表",sortList(h42))
+          //43.给定一个单链表 判断有无环 code142 指针 链表
+          var h43 = new ListNode(1)
+          h43.setNext(new ListNode(2)).setNext(new ListNode(3)).setNext(new ListNode(4)).setNext(new ListNode(1))
+          function isListcycle(head) {
+            if(head==null || head.next==null) {
+             return null
+            }
+            var slow = head
+            var fast = head
+            while(fast!=null && fast.next!=null) {
+              fast = fast.next.next
+              slow = slow.next
+              
+              if(fast == slow) {
+                break
+              }
+            }
+            // if (fast == null || fast.next == null) {
+            //   return null
+            // }
+            if(slow==fast&&fast.next!=null) { 
+              slow = head
+              while (fast != slow) {
+                  fast = fast.next
+                  slow = slow.next
+              }
+              return slow
+            }
+            return null
+          }
+          // console.log("43答案 code142 链表指针",isListcycle(h43))
+          //44. 反转链表 在规定范围  code92 链表
+          var h44 = new ListNode(1)
+          h44.setNext(new ListNode(2)).setNext(new ListNode(3)).setNext(new ListNode(4)).setNext(new ListNode(5))
+          function reverList(head,m,n) {
+            if(head==null || head.next==null || m==n || m>n) {
+              return head
+            }
+            var newTopNode = new ListNode(-1)
+            newTopNode.next = head
+            var start = newTopNode
+            var num =0
+            var end =null
+            while(start.next!=null &&num<m-1) {
+              num++
+              start = start.next
+            }
+            var b = start.next
+            var temp = null
+            var a = null
+             end = b
+            while(b!=null&&num<n) {
+               temp = b.next
+               b.next = a
+               a=b
+               b= temp
+               num++
+            }
+            start.next = a
+            end.next = b
+            console.log("VVVVVVVVVVVVVVVVVVVVVV",newTopNode.next)
+          }
+          // console.log("44答案 code92  链表", reverList(h44,3,4))
+          //45.towsum code2  链表
+          var h451 = new ListNode(1)
+          h451.setNext(new ListNode(2)).setNext(new ListNode(3))
+          var h452 = new ListNode(9)
+          h452.setNext(new ListNode(2)).setNext(new ListNode(3))
+          function towsum(l1,l2) {
+            var carry = 0;
+            var listNode= new ListNode(0);
+            var p1 = l1, p2 = l2, p3 = listNode;
+            while (p1 != null || p2 != null)
+            {
+                if (p1 != null)
+                {
+                    carry += p1.val;
+                    p1 = p1.next;
+                }
+                if (p2 != null)
+                {
+                    carry += p2.val;
+                    p2 = p2.next;
+                }
+                p3.next = new ListNode(carry % 10);
+                p3 = p3.next;
+                if(carry/10>=1) {
+                 carry=1
+                } else {
+                carry =0
+                }
+                
+            }
+            if (carry == 1)
+                p3.next = new ListNode(1);
+            return listNode.next;
+            
+          }
+          // console.log("45答案 code92 链表",towsum(h451,h452))
+          //46.数组中的第K个最大元素  code215 分而治之
+          var arrfind = [3,1,2,4,5]
+          function arrfindbig(arr, k) {
+            var leftarr = []
+            var rightarr = []
+            for(var i=1; i<arr.length; i++) {
+              if(arr[i] <=arr[0]) {
+                leftarr.push(arr[i])
+              } else {
+                rightarr.push(arr[i])
+              }
+            }
+            var len = rightarr.length
+            if(len >=k) {
+              return arrfindbig(rightarr,k)
+            } else if(len ==k-1){
+              return arr[0]
+            } else {
+              return arrfindbig(leftarr, k-len-1)
+            }
+            
+          }
+          // console.log("46答案 code215 分而治之",arrfindbig(arrfind,2))
+          
+          
+          //47. 二叉树 code102  广度优先遍历
+          function levelOrderTraversal(node) {
+            if(!node) {
+              throw new Error('Empty Tree')
+            }
+            var que = []
+            que.push(node)
+            var result = []
+            var res = []
+            var count = 1
+            var level = 0
+            while(que.length !== 0) {
+              result=[]
+              level =0 
+
+              for(i=0; i<count;i++) {
+                var temp = que.shift()
+                result.push(temp.val)
+                
+                if(temp.left) {
+                  que.push(temp.left)
+                  ++level
+                }
+                if(temp.right){
+                  que.push(temp.right)
+                  ++level
+                }
+              }
+              count = level
+              res.unshift(result)
+            }
+            return res
+          }
+         
+          // console.log("47答案 code102  广度优先遍历",levelOrderTraversal(Nodenode47))
+          //48. 二叉树 code107  广度优先遍历
+          // function levelodertree(node) {
+          //   if(node== null) {
+          //     return []
+          //   }
+          //   var que = []
+          //   que.push(node)
+            
+          // }
+          var Nodearr47  = [3,2,4,1,6,5,7]
+          var Nodelen47 = Nodearr47.length
+          var Nodenode47 = new TreeNode()
+          Nodenode47.val = Nodearr47[0]
+          CreateTreeNode(Nodenode47, 0, Nodelen47, Nodearr47)
+          // console.log("48答案 code107  广度优先遍历",mindepths(Nodenode47))
+          
+          //49. 锯齿遍历二叉树 code 103 广度优先遍历
+          function zigzagLevelOrder(node) {
+            if(!node) {
+              throw new Error('Empty Tree')
+            }
+            var que = []
+            que.push(node)
+            var result = []
+            var res = []
+            var count = 1
+            var level = 0
+            var index = 0
+            while(que.length !== 0) {
+              result=[]
+              level =0 
+              for(i=0; i<count;i++) {
+                var temp = que.shift()
+                if(index%2 ==0){
+                  result.push(temp.val)
+                } else{
+                  result.unshift(temp.val)
+                }
+                
+                
+                if(temp.left) {
+                  que.push(temp.left)
+                  ++level
+                }
+                if(temp.right){
+                  que.push(temp.right)
+                  ++level
+                }
+              }
+              index ++
+              count = level
+              res.push(result)
+            }
+          }
+          // console.log("49答案 code103  广度优先遍历",zigzagLevelOrder(Nodenode47))
+          //50. 右视图二叉树 code199 bfs
+          function rightshowtree(node) {
+            if(node == null) {
+              return []
+            }
+            var que = []
+            que.push(node)
+            var count =1
+            var result = []
+            var level=0
+            var res =[]
+            while(que.length !=0) {
+              result=[]
+              level =0 
+
+              for(i=0; i<count;i++) {
+                var temp = que.shift()
+                result.push(temp.val)
+                
+                if(temp.left) {
+                  que.push(temp.left)
+                  ++level
+                }
+                if(temp.right){
+                  que.push(temp.right)
+                  ++level
+                }
+              }
+              count = level
+              res.push(result[result.length-1])
+              
+            }
+            return res
+          }
+          // console.log("50答案 code199  bfs",rightshowtree(Nodenode47))
+          // 51.根据二叉树的任意两种遍历得到二叉树 code106 标签 DFS
+          function twoeachtree(inordertree,posttree) {
+            if(inordertree.length==0) {
+              return null
+            }
+            var rootval = posttree[posttree.length-1]
+            var Nodetree51 = new TreeNode()
+            Nodetree51.val = rootval
+            var flag = true
+            var leftinordertree = []
+            var leftpostree = []
+            var rightinodertree =[]
+            var rightposttree = []
+            for(var i=0; i<inordertree.length; ++i) {
+              if(inordertree[i] == rootval) {
+                flag = false
+              }
+              if(flag && inordertree[i] != rootval) {
+                leftinordertree.push(inordertree[i])
+                leftpostree.push(posttree[i])
+              }
+              if(!flag && inordertree[i] != rootval) {
+                rightinodertree.push(inordertree[i])
+                rightposttree.push(posttree[i-1])
+              }
+            }
+            Nodetree51.left = twoeachtree(leftinordertree,leftpostree)
+            Nodetree51.right = twoeachtree(rightinodertree,rightposttree)
+            return Nodetree51
+          }
+          // var inordertree = [1,2,6,3,5,4,7]
+          // var posttree = [1,6,2,5,7,4,3] 
+          // console.log("51答案 根据二叉树的任意两种遍历得到二叉树 code106",twoeachtree(inordertree,posttree))
+          
+          //52 根据二叉树任意两种遍历得到二叉树 code105
+          function twoeachtree2(inordertree,posttree) {
+            if(inordertree.length==0) {
+              return null
+            }
+            var rootval = posttree[0]
+            var Nodetree52 = new TreeNode()
+            Nodetree52.val = rootval
+            var flag = true
+            var leftinordertree = []
+            var leftpostree = []
+            var rightinodertree =[]
+            var rightposttree = []
+            for(var i=0; i<inordertree.length; ++i) {
+              if(inordertree[i] == rootval) {
+                flag = false
+              }
+              if(flag && inordertree[i] != rootval) {
+                leftinordertree.push(inordertree[i])
+                leftpostree.push(posttree[i+1])
+              }
+              if(!flag && inordertree[i] != rootval) {
+                rightinodertree.push(inordertree[i])
+                rightposttree.push(posttree[i])
+              }
+            }
+            Nodetree52.left = twoeachtree2(leftinordertree,leftpostree)
+            Nodetree52.right = twoeachtree2(rightinodertree,rightposttree)
+            return Nodetree52
+          }
+          var pertree = [3,2,1,6,4,5,7] 
+          var inordertree = [1,2,6,3,5,4,7]
+          // console.log("52答案 code105",twoeachtree2(inordertree,pertree))
+
+         //53 二叉树最近公共的父节点  code235  标签树
+         function neartreenode(root,p,q) {
+           if(root == null) {
+             return null
+           }
+           if(root.val>q && root.val>p) {
+            return neartreenode(root.left,p,q);
+           }else if(root.val<q && root.val<p) {
+            return neartreenode(root.right,p,q);
+           }
+           
+           return root
+         }
+         var Nodearr53  = [5,3,6,2,4,null,null,1]
+         var Nodelen53 = Nodearr47.length
+         var Nodenode53 = new TreeNode()
+         Nodenode53.val = Nodearr53[0]
+         CreateTreeNode(Nodenode53, 0, Nodelen53, Nodearr53)
+         console.log("53答案 code235",neartreenode(Nodenode53,1,4))
+
+
+
+
+
+
+
+          /*
+            这里开始从几个算法分类开始看下问题
+          */
+          //第一个类.贪婪 贪心算法 
+          // 1.分发饼干  code455   标签贪心
+          function  findcontentchildren(person,cookies) {
+            if(person.length==0 || cookies.length ==0) {
+              return 0
+            }
+            var personindex=0
+            var cookiesindex = 0
+            var res =0
+            person.sort(function(a,b) {
+              return a-b
+            })
+            cookies.sort(function(a,b) {
+              return a-b
+            })
+            while(!(personindex>=person.length || cookiesindex>=cookies.length)) {
+              if(cookies[cookiesindex] >= person[personindex]) {
+                personindex++
+                cookiesindex++
+                res++
+              } else {
+                cookiesindex++
+              }
+            }
+            return res
+          }
+          var findchildren = [10,9,8,7]
+          var findcookies = [5,6,7,8]
+          // console.log("答案 code455",findcontentchildren(findchildren,findcookies))
+          //2. 排队重建 code406 标签贪心
+          function sortqueue(sortqueuearr) {
+              sortqueuearr.sort(function(a,b) {
+                if(a[0] == b[0]) {
+                  return a[1]-b[1]
+                } else {
+                  return b[0]-a[0]
+                }
+              })
+              var res = []
+              for(var i=0; i<sortqueuearr.length; i++) {
+                console.log("结果数组",res)
+                console.log('撒十分大师傅',sortqueuearr[i])
+                res.splice(sortqueuearr[i][1],0,sortqueuearr[i])
+              }
+              console.log("算法的说法22",sortqueuearr)
+              console.log("算法的说法22222222222222222222",res)
+          }
+          var sortqueuearr = [[7,0],[4,4],[7,1],[5,0],[6,1],[5,2]]
+          // console.log("答案 code406",sortqueue(sortqueuearr))
+          //3.加油站 code134 标签贪心
+          function cancomplete(cangas,canconst) {
+            var start = 0
+            var remain = 0
+            var dbt = 0
+            for(var i=0;i<cangas.length;i++) {
+              remain +=cangas[i]-canconst[i]
+              if(remain <0) {
+                dbt+=remain
+               start = i+1
+               remain=0
+              }
+            }
+            return remain + dbt >=0?start :-1
+          }
+          var cangas = [4]
+          var canconst = [5]
+          // console.log("答案 code134", cancomplete(cangas,canconst))
+          //4.跳转游戏 code55 标签贪心
+          function canjump(arr) {
+            if(arr.length ==0) {
+              return false
+            }
+            var i=0
+            while(i<arr.length) {
+              if(arr[i] ==0) {
+               break
+              }
+              i++
+            }
+            if(i == arr.length) {
+              return true
+            }
+            i=0
+            var maxnum =0
+            for(i=0; i<arr.length-1; i++) {
+              maxnum = Math.max(maxnum, i+arr[i])
+              if(maxnum<i+1) {
+                return false
+              }
+              if(maxnum>=(arr.length-1)) {
+                return true
+              }
+            }
+            return false
+          }
+          var canjumparr = [3,2,1,0]
+          // console.log("答案 code55",canjump(canjumparr))
+        </script>
+    </body>
+</html>
+
+
+
+
+
+
+
+
+
+
