@@ -1397,7 +1397,7 @@
          var Nodenode53 = new TreeNode()
          Nodenode53.val = Nodearr53[0]
          CreateTreeNode(Nodenode53, 0, Nodelen53, Nodearr53)
-         console.log("53答案 code235",neartreenode(Nodenode53,1,4))
+        //  console.log("53答案 code235",neartreenode(Nodenode53,1,4))
 
 
 
@@ -1505,6 +1505,132 @@
           }
           var canjumparr = [3,2,1,0]
           // console.log("答案 code55",canjump(canjumparr))
+
+          /*
+            第二类    回溯
+          */
+          // 1. 全排列 code46 标签 递归
+          function permute(arr) {
+            var res = []
+            permute2(res,arr,0)
+            return res
+            function permute2 (res,nums,pos) {
+              if(pos == nums.length-1) {
+                var temp = []
+                for(var i in nums) {
+                  temp.push(nums[i])
+                }
+                
+                console.log("发大水范德萨",temp)
+                res.push(temp)  
+                               
+              }
+                 for(var i=pos; i<nums.length; i++) {
+                  swap(nums,pos,i)
+                  permute2(res,nums,pos+1)
+                  swap(nums,pos,i)
+                 }
+              
+            }
+            function swap(arr,x,y) {
+              var temp = arr[x];
+              arr[x] = arr[y];
+              arr[y]  = temp;
+            }
+          }
+          // console.log("答案 code46",permute(['a','b','c']))
+          //2. 全排列 不允许  code47 标签 回溯
+          function permutenore(nums) {
+             var res =[]
+             permutenore2(res,nums,0)
+             function permutenore2(res,nums, pos) {
+               if(pos== nums.length-1) {
+                console.log("发大水范德萨",nums)
+               } else {
+                for(var i=pos; i<nums.length;i++) {
+                   var flag =false
+                   for(var j=pos; j<i; j++) {
+                      if(nums[j] == nums[i]) {
+                        flag=true
+                      }
+                   }
+                   if(flag) {
+                     continue
+                   }
+                   swap(nums,pos,i)
+                   permutenore2(res,nums,pos+1)
+                  swap(nums,pos,i)
+                }
+               }
+             }
+             function swap(arr,x,y) {
+              var temp = arr[x];
+              arr[x] = arr[y];
+              arr[y]  = temp;
+             }
+          }
+          // console.log("答案 code47",permutenore(['2','2','1','1']))
+          // 3.相加和为目标  code39 标签回溯
+          function solution(candidates,target) {
+            var res = []
+            var temp = []
+            candidates.sort(function(a,b) {
+              return a-b
+            })
+            allsum(candidates,temp,target,0)
+            console.log("LLLLLL",res)
+            function allsum(candidates,temp,target,pos) {
+              if(target <0) {               
+                return 
+              }
+              if(target ==0) {
+                var aa = []
+                for(var i in temp) {
+                  aa.push(temp[i])
+                }
+                res.push(aa)          
+              } 
+              for(var i=pos; i<candidates.length; i++) {               
+                  temp.push(candidates[i])
+                  allsum(candidates,temp,target-candidates[i],i+1)
+                  temp.pop()
+              }
+              
+            }
+          }
+          // console.log("答案 code39",solution([10,1,2,7,6,1,5],8))
+          //4. code40  
+          function solution40(cand,target) {
+            var res = []
+            var tem = []
+            cand.sort(function(a,b) {
+              return a-b
+            })
+            allsum(res,cand,tem,0,target)
+            // return res
+            function allsum(res,cand,tem,pos,target) {
+             if(target <0) {
+              return
+             } else if(target == 0) {
+              var aa = []
+                for(var i in tem) {
+                  aa.push(tem[i])
+                }
+                res.push(aa)
+               console.log("fsdafds ",res)
+             } else {
+                for(var i=pos; i<cand.length; i++) {
+                  if(i > pos && cand[i] == cand[i-1]) {
+                    continue
+                  }
+                  tem.push(cand[i])
+                  allsum(res,cand,tem,i+1,target-cand[i])
+                  tem.pop()
+                }
+             }
+            }
+          }
+          // console.log("答案 code40",solution40([10,1,2,7,6,1,5],8))
         </script>
     </body>
 </html>
