@@ -1689,7 +1689,51 @@
               }
            }
           }
-          console.log("答案 code77",solution77(4,2))
+          // console.log("答案 code77",solution77(4,2))
+
+          //第三类 堆
+          // 1.code20  有效括号
+          function isvalid(str) {
+            if(str.length == 0 || str.length ==1) {
+              return false
+            }
+            var stack = []
+            for(var i=0; i<str.length; i++) {
+               var cur =  str[i]
+               if(cur =='(' || cur =='{' || cur == '[') {
+                  stack.push(cur)
+               } else {
+                switch(cur){
+                    case ')': 
+                        if(stack.pop() != '('){
+                            return false;
+                        } 
+                        break
+                    case ']' : 
+                        if(stack.pop() != '['){
+                            return false;
+                        } 
+                        break
+                    case '}' : 
+                        if(stack.pop() != '{'){
+                            return false
+                        } 
+                        break
+                    default :
+                        break
+                }
+ 
+               }
+            }
+            return stack.length==0
+          }
+          // console.log("答案 code20",isvalid('(dr){fff}[hgfds]{'))
+          
+          // 2.code225 队列模拟堆栈
+          function Queuestack() {
+
+          }
+
         </script>
     </body>
 </html>
