@@ -2032,7 +2032,27 @@
             }
             console.log("数组",arr)
           }
-          console.log("答案 code283",huimovezeroes([0,2,3,0,6,0,4,5]))
+          // console.log("答案 code283",huimovezeroes([0,2,3,0,6,0,4,5]))
+          // 9.合并排序数组 code88
+          function huimergesortarr(arr1,m,arr2,n) {
+            var point1 = m-1
+            var point2 = n-1
+            for(var j = m+n-1; point1>=0 && point2>=0;j--) {
+              if(arr2[point2]>=arr1[point1]) {
+                arr1[j] = arr2[point2]
+                point2--
+              } else {
+                arr1[j] = arr1[point1]
+                point1--
+              }
+            }
+            while(point2>=0) {
+               arr1[point2] = arr2[point2]
+               point2--
+            }
+            console.log("最后䣌结果",arr1)
+          }
+          console.log("答案 code88",huimergesortarr([],0,[1],1))
         </script>
     </body>
 </html>
