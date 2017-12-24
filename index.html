@@ -1522,15 +1522,22 @@
                 }
                 
                 console.log("发大水范德萨",temp)
-                res.push(temp)  
-                               
-              }
-                 for(var i=pos; i<nums.length; i++) {
+                res.push(temp)   
+                return false                        
+              } else {
+                for(var i=pos; i<nums.length; i++) {
+                  var flag = true
                   swap(nums,pos,i)
-                  permute2(res,nums,pos+1)
+                  flag = permute2(res,nums,pos+1)
                   swap(nums,pos,i)
+                  if(!flag) {
+                    continue
+                    // console.log("发大水范德萨111111111",nums)
+                  }
+                  // swap(nums,pos,i)
                  }
-              
+                 return false
+              }      
             }
             function swap(arr,x,y) {
               var temp = arr[x];
@@ -1893,7 +1900,7 @@
 
 /*
 
-             回炉容易
+             回炉 低中
 */
           //回 排列
           // 1. code167 两个数组和返回下标
@@ -2281,6 +2288,170 @@
           }
           // console.log("答案 code18",huifoursum([-1,0,-5,-2,-2,-4,0,1,-2]))
           //排列标签 code39 cdoe40 code105 是回溯的标签 还没做
+          
+
+          //回炉 回溯
+          // 1.组合
+          function huihuisum(arr,target) {
+            arr.sort(function(a,b) {
+              return a-b
+            })
+            var temp = []
+            var list = []
+            huihuitrack(temp,arr,target,0)
+            return list
+            function huihuitrack(temp,arr,remain,start) {
+              if(remain <0) {
+                 return false
+              } else if (remain == 0) {
+                  var tt = []
+                  for(var i in temp) {
+                      tt.push(temp[i])
+                  }
+                  list.push(tt)
+                  return false
+              } else {
+                for(var i = start; i<arr.length; i++){
+                  // if(i != start && arr[i] == arr[i-1]){
+                  //     continue;
+                  // }
+                    var flag = true 
+                    temp.push(arr[i])
+                    flag = huihuitrack(temp,arr,remain-arr[i],i)
+                    // flag = huihuitrack(temp,arr,remain-arr[i],i+1)                 
+                    if(!flag) {
+                      temp.pop() 
+                      temp.pop() 
+                       break
+                    }
+                }
+                return true
+              }
+            }
+          }
+          // console.log("答案 code39",huihuisum([2,3,6,7],7))
+          // 2.全排列 code77
+          function huiallsort(n,k){
+           var tem = []
+           var res = []
+           if(k==0) {
+               return []
+            }
+           allsum(n,k,1,tem)
+           return res
+           function allsum(n,k,pos,tem) {
+             
+              if(tem.length == k) {
+                var oo = []
+                for(var i in tem) {
+                  oo.push(tem[i])
+                }
+                res.push(oo)
+                return false
+              } else {
+                for(var i=pos; i<=n;i++) {
+                  var flag = true
+                  tem.push(i)
+                  flag = allsum(n,k,pos+1,tem)
+                  tem.pop()
+                  if(!flag) {
+                    
+                    break
+                    // continue
+                  }             
+                }
+                return true
+              }  
+           }
+          }
+          // console.log("答案 code77",huiallsort(3,3))
+          // 2. 全排列组合code46
+          function huiallsortconcat(nums){
+            var res = []
+            permute2(res,nums,0)
+            return res
+            function permute2(res,nums,pos) {
+                if(pos == nums.length-1) {
+                  var tem = []
+                  for(var i in nums) {
+                      tem.push(nums[i])
+                  }
+                  res.push(tem)
+                }
+                for(var i=pos; i<nums.length; i++) {
+                    swap(nums,pos,i)
+                    permute2(res,nums,pos+1)
+                    swap(nums,pos,i)
+                }
+            }
+            function swap(arr,x,y) {
+                var temp = arr[x]
+                arr[x]=arr[y]
+                arr[y]=temp
+            }
+          }
+          // console.log("答案 code46",huiallsortconcat([1,2,3]))
+          // 3.查找单词 code79
+          function huisearchword(board,word) {
+            var isexist = false
+            if(word== '') {
+              return true
+            }
+            var row = board.length
+            if(row == 0) {
+              return false
+            }
+            var col = board[0].length
+            var isSearch = new Array()
+            for(var k=0; k<row; k++) {
+               isSearch[k] = new Array()
+               for(var j=0; j<col;j++) {
+                 isSearch[k][j] = false
+               }
+            }
+            for(var i=0; i<row; i++) {
+              for(var j=0; j<col; j++) {
+                if(board[i][j] == word[0]) {
+                   backexist(board,word,0,i,j,row,col,isSearch)
+                }
+              }
+            }
+            return isexist
+            function backexist(board,word,count,x,y,row,col,isSearch) {
+              
+              if(board[x][y] == word[count]) {
+                 count++
+              } else {
+                return false
+              }
+              if(word.length == count) {
+                  isexist = true
+                  // return false
+              }
+              isSearch[x][y] = true
+              // if(!isexist) {
+                if(y-1>=0 && !isSearch[x][y-1]) {
+                  backexist(board,word,count,x,y-1,row,col,isSearch)
+                }
+                if(y+1<col && !isSearch[x][y+1]) {
+                  backexist(board,word,count,x,y+1,row,col,isSearch)
+                }
+                if(x-1>=0 && !isSearch[x-1][y]) {
+                  backexist(board,word,count,x-1,y,row,col,isSearch)
+                }
+                if(x+1<row && !isSearch[x+1][y]) {
+                  backexist(board,word,count,x+1,y,row,col,isSearch)
+                }
+                isSearch[x][y] = false
+              // }
+            }
+          }
+          var huisearchwordarr = [
+            [ 'A', 'B', 'C', 'E'],
+            [ 'S', 'F', 'C', 'S'],
+            [ 'A', 'd', 'E', 'E']
+          ]
+          console.log("答案 code79",huisearchword(huisearchwordarr,"SFB"))
         </script>
     </body>
 </html>
