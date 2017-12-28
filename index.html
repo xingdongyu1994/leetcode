@@ -192,9 +192,9 @@
               return num
             }
             // console.log("9答案", lengthlastword("hello ddd "))
-            //10.排序链表去重
+            //10.排序链表去重 code83
             var h10 = new ListNode(1)
-            h10.setNext(new ListNode(1))
+            h10.setNext(new ListNode(1)).setNext(new ListNode(2)).setNext(new ListNode(2)).setNext(new ListNode(3))
             function deleteDuplicates(head) {
               if(head===null) {
                 return null
@@ -211,7 +211,7 @@
               }
               return head
             }
-            // console.log("10答案",deleteDuplicates(h10))
+            // console.log("答案 code83",deleteDuplicates(h10))
             //11.数组排序 合并 双指针
             function arrsortmerge(nums1, m, nums2, n) {
               var total = [];
@@ -409,7 +409,7 @@
               }
             }
             // console.log("17答案 移动0节点",removezeroes([0,1,2,0,3,6]))
-            //18. 回文单链表 两个指针
+            //18. 回文单链表 两个指针 code234
             function ispalindromeDuplicates(node) {
               function getLength() {
                 var len =0
@@ -695,6 +695,7 @@
               if(head == null || head.next ==null) {
                 return head
               }
+
               var pre = null
               var cur = head
               while (cur!=null) {
@@ -946,7 +947,7 @@
           // console.log("38答案 code19 中 指针",removelastnum(h38,2))
           //39.旋转链表  code61 指针
           var h39 = new ListNode(1)
-          h39.setNext(new ListNode(2))
+          h39.setNext(new ListNode(4)).setNext(new ListNode(2)).setNext(new ListNode(3))
           function RotateList(head, k) {
             console.log("EEEEEEEEEEE",head)
             if(head == null) {
@@ -972,7 +973,7 @@
               slow = slow.next
               phead = phead.next
             }
-            conso
+          
             temp = slow.next
             slow.next = null
             phead.next = head
@@ -1018,8 +1019,8 @@
           }
           // console.log("41答案 code3 指针",findarrlast(str41))
           //42.排序链表 code148 链表
-          var h42 = new ListNode(1)
-          h42.setNext(new ListNode(2)).setNext(new ListNode(3)).setNext(new ListNode(4))
+          var h42 = new ListNode(5)
+          h42.setNext(new ListNode(3)).setNext(new ListNode(1)).setNext(new ListNode(4))
           function sortList(head) {
             if(head == null || head.next == null) {
               return head
@@ -1095,7 +1096,7 @@
           // console.log("43答案 code142 链表指针",isListcycle(h43))
           //44. 反转链表 在规定范围  code92 链表
           var h44 = new ListNode(1)
-          h44.setNext(new ListNode(2)).setNext(new ListNode(3)).setNext(new ListNode(4)).setNext(new ListNode(5))
+          h44.setNext(new ListNode(2)).setNext(new ListNode(3)).setNext(new ListNode(4)).setNext(new ListNode(1))
           function reverList(head,m,n) {
             if(head==null || head.next==null || m==n || m>n) {
               return head
@@ -1126,10 +1127,10 @@
           }
           // console.log("44答案 code92  链表", reverList(h44,3,4))
           //45.towsum code2  链表
-          var h451 = new ListNode(1)
-          h451.setNext(new ListNode(2)).setNext(new ListNode(3))
-          var h452 = new ListNode(9)
-          h452.setNext(new ListNode(2)).setNext(new ListNode(3))
+          var h451 = new ListNode(2)
+          h451.setNext(new ListNode(4)).setNext(new ListNode(3))
+          var h452 = new ListNode(5)
+          h452.setNext(new ListNode(6)).setNext(new ListNode(7))
           function towsum(l1,l2) {
             var carry = 0;
             var listNode= new ListNode(0);
@@ -1805,7 +1806,7 @@
              }
              return bigitem
           }
-          // console.log("答案 code169",bigelement([1,1,2,5,4,4,6]))
+          // console.log("答案 code169",bigelement(['a','b','a','c']))
           // 3.code240  矩阵查找
           function searchnum(arr,target) {
             if(arr.length ==0 || arr[0].length ==0) {
@@ -1887,15 +1888,15 @@
                return head.next
             }
           }
-          var h23 = null
-          // h23.setNext(new ListNode(2)).setNext(new ListNode(5)).setNext(new ListNode(6))
-          var h23a = new ListNode(-1)
-          h23a.setNext(new ListNode(5)).setNext(new ListNode(11))
+          var h23 = new ListNode(1)
+          h23.setNext(new ListNode(3)).setNext(new ListNode(5))
+          var h23a = new ListNode(2)
+          h23a.setNext(new ListNode(4)).setNext(new ListNode(6))
           var h23b = null
           // h23b.setNext(new ListNode(13)).setNext(new ListNode(15)).setNext(new ListNode(18))
           var h23c = new ListNode(6)
           h23c.setNext(new ListNode(10))
-          var mergelistarr = [h23,h23a,h23b,h23c]
+          var mergelistarr = [h23,h23a]
           // console.log("答案 code23",mergelist(mergelistarr))
 
 /*
@@ -2451,18 +2452,292 @@
             [ 'S', 'F', 'C', 'S'],
             [ 'A', 'd', 'E', 'E']
           ]
-          console.log("答案 code79",huisearchword(huisearchwordarr,"SFB"))
+          // console.log("答案 code79",huisearchword(huisearchwordarr,"SFB"))
+
+          //回炉链表
+          // 1. code206  反向链表
+          // 2. 旋转链表 code61
+          var huirotatelistlist = new ListNode(1)
+          huirotatelistlist.setNext(new ListNode(4)).setNext(new ListNode(2)).setNext(new ListNode(3))
+          function huirotatelist(head,k) {
+            if(head == null || k==0) {
+               return head
+            }
+            var len =0
+            var root = head
+            while(root) {
+              root = root.next
+              len++
+            }
+            k = k%len
+            if(k==0) {
+              return head
+            }
+            
+            var left = head
+            var right = head
+            let res = 0
+            while(right.next) {
+              if(res>=1) {
+               left = left.next
+              }
+              right = right.next
+              res++
+            }
+            
+            if(res<k) {
+              return head
+            }
+            
+            var temp = left.next
+            left.next = null
+            right.next = head
+            return temp
+          }
+          // console.log("答案h code61",huirotatelist(huirotatelistlist,1))
+          //3.删除链表倒数n code19
+          function huideletelastlist(head,n) {
+              if(head == null|| n==0) {
+                return head
+              }
+              var left = head
+              var right = head
+              var res = 0
+              while(n-- >0) {
+                 right = right.next
+              }
+              if(right == null) {
+                 return head.next
+              }
+              while(right.next) {
+                 left = left.next
+                 right = right.next
+              }
+              left.next = left.next.next
+              return head
+          }
+          var huideletelastarr = new ListNode(1)
+          // huideletelastarr.setNext(new ListNode(4))
+          // console.log("答案 code19", huideletelastlist(huideletelastarr,1))
+          //4.删除链表中所有重复的元素  code82
+          function huideletealreplist(head) {
+             if(head == null || head.next == null) {
+                return head
+             }
+             console.log("gasdfdasfdsfs",head)
+             var right = head.next
+             if(right.val !=head.val) {
+                head.next = huideleteallreplist(right)
+                return head
+             } else {
+                while(right && right.val==head.val) {
+                  right = right.next
+                }
+                return huideleteallreplist(right)
+             }
+
+          }
+          var huideleteallarr = new ListNode(1)
+          huideleteallarr.setNext(new ListNode(1)).setNext(new ListNode(2)).setNext(new ListNode(3)).setNext(new ListNode(4))
+          // console.log("答案 code82",huideleteallreplist(huideleteallarr))
+          //5.两个链表相加 code445
+          function huitowlistsum(head1,head2) {
+            var list1 =[]
+            var list2 =[]
+            while(head1){
+               list1.push(head1.val)
+               head1 = head1.next
+            }
+            while(head2){
+               list2.push(head2.val)
+               head2 = head2.next
+            }
+           
+            var sum = 0
+            var pnode = null
+            while(list1.length !=0 || list2.length !=0 || sum) {
+              if(list1.length!=0) {
+                sum+=list1.pop()  
+              }
+              if(list2.length!=0) {
+                sum+=list2.pop()  
+              }
+              var node = new ListNode(sum%10)
+              node.next = pnode
+              pnode = node
+              sum = Math.floor(sum/10)
+            }
+            return pnode
+          }
+          var huitowlistsumarr1 = new ListNode(7)
+          huitowlistsumarr1.setNext(new ListNode(2)).setNext(new ListNode(4)).setNext(new ListNode(3))
+          var huitowlistsumarr2 = new ListNode(5)
+          huitowlistsumarr2.setNext(new ListNode(6)).setNext(new ListNode(4))
+          // console.log("答案 code445",huitowlistsum(huitowlistsumarr1,huitowlistsumarr2))
+
+          
+
+          //回炉 分而治之
+          //回炉 堆栈
+          // 1.获取最小堆栈元素 code155
+          var MinStack = function() {
+              this.stack = []
+              this.minitem = []
+          }
+          MinStack.prototype.push = function(x) {
+              this.stack.push(x)
+              if(this.minitem.length>0) {
+                 var min = this.minitem[this.minitem.length-1]
+                 if(x<=min) {
+                  this.minitem.push(x)
+                 }
+              } else {
+                this.minitem.push(x)
+              }
+          }
+          MinStack.prototype.pop = function() {
+              if(this.stack.length>0) {
+                 var num = this.stack.pop()
+                 var min = this.minitem[this.minitem.length-1]
+                 if(num == min) {
+                   this.minitem.pop()
+                 }
+              }
+          }
+          MinStack.prototype.top = function() {
+              if(this.stack.length>0) {
+                return this.stack[this.stack.length-1]
+              } else {
+                return null
+              }
+          }
+          MinStack.prototype.getMin = function() {
+              if(this.minitem.length>0) {
+                var min = this.minitem[this.minitem.length-1]
+                return min
+              } else{
+                return null
+              }
+          }  
+          var minstack = new MinStack()
+          minstack.push(-2)
+          minstack.push(0)
+          minstack.push(-3)
+          // minstack.push(5)
+          minstack.pop()
+          // console.log("答案 code155(2)",minstack)
+          // console.log("答案 code155(3)",minstack.getMin())
+
+          // 2.使用队列实现堆栈 code225   
+          var MyStack = function() {
+              this.mystack = []
+              // this.savestack = []
+          }
+          MyStack.prototype.push = function(x) {
+              this.mystack.push(x)
+              for(var i=1; i<this.mystack.length; i++) {
+                 var save = this.mystack.pop()
+                //  console.log("显示的",save)
+                 this.mystack.push(save)
+              }
+          }
+          MyStack.prototype.pop = function() {
+            return this.mystack.pop()
+          }
+          MyStack.prototype.top = function() {
+              return this.mystack[this.stack.length-1]
+          }
+          MyStack.prototype.empty = function() {
+             if(this.mystack.length ==0) {
+               return true
+             } else {
+               return false
+             }
+          }
+          // var mystack = new MyStack()
+          // mystack.push(1)
+          // mystack.push(2)
+          // mystack.push(3)
+          // console.log("答案 code225",mystack)
+
+          //3.用堆栈来实现一个队列  code232
+          var MyQueue = function() {
+              this.stack1 = []
+              this.stack2 = []
+          }
+          MyQueue.prototype.push = function(x) {
+             
+              this.stack1.push(x)
+          }
+          MyQueue.prototype.pop = function() {
+              if(this.stack2.length !=0) {
+                 this.stack2.pop()
+              } else {
+                 while(this.stack1.length!=0) {
+                  this.stack2.push(this.stack1[this.stack1.length-1])
+                  this.stack1.pop()
+                 }
+                 this.stack2.pop()
+              }
+             
+              
+              // return this.stack2.pop()
+          }
+          MyQueue.prototype.peek = function() {
+            if(this.stack2.length !=0) {
+                return this.stack2.pop()
+            } else {
+                while(this.stack1.length!=0) {
+                this.stack2.push(this.stack1[this.stack1.length-1])
+                this.stack1.pop()
+                }
+                return this.stack2.pop()
+            }
+          }
+          MyQueue.prototype.empty = function() {
+              if(this.stack1.length ==0){
+                return true
+              } else {
+                return false
+              }
+          }
+          var myqueue = new MyQueue()
+          myqueue.push()
+          myqueue.push()
+          myqueue.push(1)
+          myqueue.push([])
+          // myqueue.push(2)
+          // myqueue.push(3)
+          // var my1 = myqueue.pop()
+          // var my2 = myqueue.peek()
+          // var my3 = myqueue.empty()
+          // console.log("答案 code232",myqueue)
+          // console.log("11",my1)
+          // console.log("22",my2)
+          // console.log("33",my3)
+          
+
+          //4.遍历二叉树 code94
+          
+          function huiinordertree(Nodenode94) {
+            var res = []
+            huiresult(Nodenode94,res)
+            return res
+           function huiresult(root,res) {
+             if(root!=null) {
+              huiresult(root.left,res)
+              res.push(root.val)
+              huiresult(root.right, res)
+             }
+           }
+          }
+
+          var Nodearr94  = ['A','B','C']
+          var Nodelen94 = Nodearr94.length
+          var Nodenode94 = new TreeNode()
+          Nodenode94.val = Nodearr94[0]
+          CreateTreeNode(Nodenode94, 0, Nodelen94, Nodearr94)
+          console.log("答案 code94",huiinordertree(Nodenode94))
         </script>
     </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
