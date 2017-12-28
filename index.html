@@ -2729,6 +2729,7 @@
               res.push(root.val)
               huiresult(root.right, res)
              }
+             
            }
           }
 
@@ -2737,7 +2738,44 @@
           var Nodenode94 = new TreeNode()
           Nodenode94.val = Nodearr94[0]
           CreateTreeNode(Nodenode94, 0, Nodelen94, Nodearr94)
-          console.log("答案 code94",huiinordertree(Nodenode94))
+          // console.log("答案 code94",huiinordertree(Nodenode94))
+
+          //分类
+          // 1. 最大的数 code179
+          function huibignum(nums) {
+           
+            var len = nums.length
+            var max = 0 
+            var arr = []
+            
+            for(var i=0; i<len; i++) {
+              if(nums[i]>max) {
+                max = nums[i]
+              }
+              arr.push(nums[i].toString())
+            }
+            arr.sort(function(a,b){
+              var c1 = a+b
+              var c2 = b+a
+              console.log("的说法是打",c1)
+              console.log("sdfdsfds",c2)
+
+              if(c1 >c2) {
+                return -1
+              } else if(c1<c2) {
+                return 1
+              } else{
+                return 0
+              }
+            })
+            return arr.join("")
+            console.log("最终的结果",arr)
+          
+          }
+          // console.log("答案 code179",huibignum([0,0]))
+
+          // 深度优先遍历
+          // 1.
         </script>
     </body>
 </html>
