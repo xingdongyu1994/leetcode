@@ -2831,7 +2831,100 @@
               return huitreepathsum(root.left,sum) || huitreepathsum(root.right,sum)
             }
           }
-          console.log("答案 code112",huitreepathsum(hNodenode33,22))
+          // console.log("答案 code112",huitreepathsum(hNodenode33,22))
+          //4. 平衡二叉树  code110
+          function huiisbalanced(root){
+            console.log("树",root)
+            if(root == null) {
+              return true
+            } else {
+              var h1 = dfs(root.left)
+              var h2 = dfs(root.right)
+              if(h1-h2 >1 || h1-h2<-1) {
+                 return false
+              } else {
+                return huiisbalanced(root.left) && huiisbalanced(root.right)
+              }
+            }
+            function dfs(head) {
+               if(head = null) {
+                 return 0
+               } else {
+                 var h1 = dfs(head.left)+1
+                 var h2 = dfs(head.right)+1
+                 return h1>h2 ?h1:h2
+               }
+            }
+          }
+          var hNodearr110  = [1,2,3,4,5,6,7,8,9]
+          var hNodelen110 = hNodearr110.length
+          var hNodenode110 = new TreeNode()
+          hNodenode110.val = hNodearr110[0]
+          CreateTreeNode(hNodenode110, 0, hNodelen110, hNodearr110)
+          // console.log("答案 code110",huiisbalanced(hNodenode110))
+          // 5.层次遍历树 code102
+          function huisolutiontree(root) {
+            var arr =  []
+            var queue = []
+            if(root == null) {
+              return []
+            }
+            queue.push(root)
+            // console.log("显示的",queue)
+            while(queue.length!=0){
+               var levelarr = []
+               var qlen = queue.length
+               for(var i=0; i<qlen; i++) {
+                var temp = queue.shift()
+                levelarr.push(temp.val)     
+                
+                if(temp.left !=null) {
+                  queue.push(temp.left)
+                }
+                if(temp.right!=null) {
+                  queue.push(temp.right)
+                }
+               }
+               arr.push(levelarr)
+            }
+            return arr
+          }
+          // console.log("答案 code102",huisolutiontree(hNodenode110))
+          //6.锯齿遍历 code103
+          function huiroundtree(root) {
+            if(root == null){
+              return []
+            }
+            var queue = []
+            var res = []
+            var level = 1
+            queue.push(root)
+            while(queue.length !=0) {
+              var levelarr = []
+              var qlen = queue.length
+              
+              for(var i=0; i<qlen; i++) {
+                console.log("发大水发大水",level)
+                if(level %2 ==0) {
+                  var temp = queue.shift()  
+                } else {
+                  var temp = queue.pop()
+                }
+                // var temp = queue.shift()  
+                levelarr.push(temp.val)
+                if(temp.left) {
+                  queue.push(temp.left)
+                }
+                if(temp.right) {
+                  queue.push(temp.right)
+                }
+              }
+              level++
+              res.push(levelarr)
+            }
+            return res
+          }
+          console.log("答案 code103",huiroundtree(hNodenode110))
         </script>
     </body>
 </html>
